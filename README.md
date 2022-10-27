@@ -17,4 +17,4 @@ Run the following tasks in order:
 1. `docker compose up`
 2. `task migrate-up`
 
-Then run `go run main.go` to the run the API.
+Then run `go run main.go` to the run the API
