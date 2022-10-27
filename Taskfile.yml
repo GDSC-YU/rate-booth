@@ -1,0 +1,34 @@
+version: '3'
+
+tasks:
+  create-db:
+    cmds:
+      - docker exec -it rate-booth-postgresdb-1 createdb --username=root --owner=root ratebooth
+
+  drop-db:
+    cmds:
+      - docker exec -it rate-booth-postgresdb-1 dropdb ratebooth
+
+  migrate-up:
+    cmds:
+      - migrate -path db/migration -database "postgresql://root:password@localhost:5432/ratebooth?sslmode=disable" -verbose up
+
+  migrate-down:
+    cmds:
+      - migrate -path db/migration -database "postgresql://root:password@localhost:5432/ratebooth?sslmode=disable" -verbose down
+
+  sqlc:
+    cmds:
+      - sqlc generate
+  
+  test:
+    cmds:
+      - go test -v -cover ./...
+
+  server:
+    cmds:
+      - go run main.go
+
+  build-ratebooth-api:
+    cmds:
+      - docker build -t ratebooth-api:latest .
