@@ -45,7 +45,13 @@ jobs:
       - name: Clone Repository
         uses: actions/checkout@v3
       
-      - name: Run migrations
+      - name: Run migrations up
+        run: task migrate-up
+
+      - name: Run migrations down
+        run: task migrate-down
+
+      - name: Run migrations up again
         run: task migrate-up
       
       - name: Run Tests

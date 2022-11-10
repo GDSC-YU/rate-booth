@@ -18,3 +18,19 @@ Run the following tasks in order:
 2. `task migrate-up`
 
 Then run `go run main.go` to the run the API
+
+## Create a migration
+
+We use migrations to introduce any change into the database, from new tables to altering existing ones.
+
+Use the following command to create a migration:
+
+```sh
+migrate create -seq -ext sql -dir db/migration migration_name
+```
+
+> NOTE: replace `migration_name` with the preferred migration name
+
+## Build the api docker image
+
+Run: `docker build -t rate-booth-api .`
