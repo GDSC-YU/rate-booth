@@ -7,6 +7,8 @@ package db
 
 import (
 	"context"
+
+	"github.com/google/uuid"
 )
 
 const addRating = `-- name: AddRating :one
@@ -16,9 +18,9 @@ RETURNING id, price, quality, created_at, booth_id
 `
 
 type AddRatingParams struct {
-	Price   int32 `json:"price"`
-	Quality int32 `json:"quality"`
-	BoothID int64 `json:"booth_id"`
+	Price   int32     `json:"price"`
+	Quality int32     `json:"quality"`
+	BoothID uuid.UUID `json:"booth_id"`
 }
 
 func (q *Queries) AddRating(ctx context.Context, arg AddRatingParams) (Rating, error) {
@@ -41,7 +43,7 @@ WHERE rating.booth_id = $1
 ORDER BY rating.created_at DESC
 `
 
-func (q *Queries) ListRatingsByBoothId(ctx context.Context, boothID int64) ([]Rating, error) {
+func (q *Queries) ListRatingsByBoothId(ctx context.Context, boothID uuid.UUID) ([]Rating, error) {
 	rows, err := q.db.QueryContext(ctx, listRatingsByBoothId, boothID)
 	if err != nil {
 		return nil, err

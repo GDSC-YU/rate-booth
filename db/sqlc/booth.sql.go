@@ -7,6 +7,8 @@ package db
 
 import (
 	"context"
+
+	"github.com/google/uuid"
 )
 
 const addBooth = `-- name: AddBooth :one
@@ -49,7 +51,7 @@ FROM booth
 WHERE booth.id = $1
 `
 
-func (q *Queries) GetBoothById(ctx context.Context, boothID int64) (Booth, error) {
+func (q *Queries) GetBoothById(ctx context.Context, boothID uuid.UUID) (Booth, error) {
 	row := q.db.QueryRowContext(ctx, getBoothById, boothID)
 	var i Booth
 	err := row.Scan(

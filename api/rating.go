@@ -5,12 +5,13 @@ import (
 	"net/http"
 
 	"github.com/gin-gonic/gin"
+	"github.com/google/uuid"
 )
 
 type addRatingRequest struct {
-	Price   int32 `json:"price" binding:"required,min=1,max=5"`
-	Quality int32 `json:"quality" binding:"required,min=1,max=5"`
-	BoothId int64 `json:"booth_id" binding:"required"`
+	Price   int32     `json:"price" binding:"required,min=1,max=5"`
+	Quality int32     `json:"quality" binding:"required,min=1,max=5"`
+	BoothId uuid.UUID `json:"booth_id" binding:"required"`
 }
 
 func (s *Server) AddRating(ctx *gin.Context) {
@@ -36,7 +37,7 @@ func (s *Server) AddRating(ctx *gin.Context) {
 }
 
 type listRatingsByBoothIdRequest struct {
-	BoothId int64 `uri:"booth_id" binding:"required"`
+	BoothId uuid.UUID `uri:"booth_id" binding:"required"`
 }
 
 func (s *Server) ListRatingsByBoothId(ctx *gin.Context) {
