@@ -5,6 +5,7 @@ import (
 	"net/http"
 
 	"github.com/gin-gonic/gin"
+	"github.com/google/uuid"
 )
 
 type addBoothRequest struct {
@@ -40,7 +41,7 @@ func (s *Server) AddBooth(ctx *gin.Context) {
 }
 
 type getBoothRequest struct {
-	ID int64 `uri:"id" binding:"required,min=1"`
+	ID uuid.UUID `uri:"id" binding:"required,min=1"`
 }
 
 func (s *Server) GetBooth(ctx *gin.Context) {

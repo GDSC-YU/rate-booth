@@ -42,11 +42,51 @@ jobs:
           curl -L https://github.com/golang-migrate/migrate/releases/download/v4.15.2/migrate.linux-amd64.tar.gz | tar xvz
           sudo mv migrate /usr/bin/migrate
 
+      - name: Install sqlc tool
+        run: go install github.com/kyleconroy/sqlc/cmd/sqlc@latest
+
       - name: Clone Repository
         uses: actions/checkout@v3
       
-      - name: Run migrations
+      - name: Run migrations up
         run: task migrate-up
+
+      - name: Run migrations down
+        run: echo y | task migrate-down
+
+      - name: Run migrations up again
+        run: task migrate-up
+
+      - name: Did generate queries with sqlc?
+        run: |
+          task sqlc
+
+          RESULT=$(git status)
+          if [[ $RESULT == *"Changes not staged for commit:"* || $RESULT == *"Untracked files:"* ]]; then
+            echo "🛑 You need to run 'task sqlc' and commit the changes."
+            git diff
+            exit 1
+          else
+            echo "✅ You are good to go."
+          fi
+      
+      - name: Did run go mod tidy?
+        run: |
+          go mod tidy
+
+          RESULT=$(git status)
+          if [[ $RESULT == *"Changes not staged for commit:"* || $RESULT == *"Untracked files:"* ]]; then
+            echo "🛑 You need to run 'go mod tidy' and commit the changes."
+            git diff
+            exit 1
+          else
+            echo "✅ You are good to go."
+          fi
       
       - name: Run Tests
         run: task test
+
+      - name: Upload coverage to Codecov
+        uses: codecov/codecov-action@v3
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}
