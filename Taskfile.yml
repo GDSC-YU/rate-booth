@@ -15,7 +15,7 @@ tasks:
   
   test:
     cmds:
-      - go test -v -cover ./...
+      - go test -v -cover -coverprofile=coverage.out ./...
 
   server:
     cmds:
