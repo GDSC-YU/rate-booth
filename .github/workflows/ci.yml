@@ -49,7 +49,7 @@ jobs:
         run: task migrate-up
 
       - name: Run migrations down
-        run: task migrate-down
+        run: echo y | task migrate-down
 
       - name: Run migrations up again
         run: task migrate-up
