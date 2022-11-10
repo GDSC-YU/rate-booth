@@ -11,7 +11,7 @@ func CreateDbSource(
 	dbSSLMode string,
 ) string {
 	dbSource := fmt.Sprintf(
-		"postgres://%s:%s@%s:%s/%s?sslmode=%s",
+		"user='%s' password='%s' host='%s' port='%s' dbname='%s' sslmode='%s'",
 		dbUser,
 		dbPassword,
 		dbHost,
