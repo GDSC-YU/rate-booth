@@ -42,6 +42,9 @@ jobs:
           curl -L https://github.com/golang-migrate/migrate/releases/download/v4.15.2/migrate.linux-amd64.tar.gz | tar xvz
           sudo mv migrate /usr/bin/migrate
 
+      - name: Install sqlc tool
+        run: go install github.com/kyleconroy/sqlc/cmd/sqlc@latest
+
       - name: Clone Repository
         uses: actions/checkout@v3
       
