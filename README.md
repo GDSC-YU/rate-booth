@@ -1,5 +1,7 @@
 # ratebooth
 
+[![codecov](https://codecov.io/gh/GDSC-YU/rate-booth/branch/main/graph/badge.svg?token=2s7qJUPgaa)](https://codecov.io/gh/GDSC-YU/rate-booth)
+
 ## Getting Stared
 
 Install the following dependencies:

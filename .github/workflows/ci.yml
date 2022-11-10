@@ -70,6 +70,19 @@ jobs:
             echo "✅ You are good to go."
           fi
       
+      - name: Did run go mod tidy?
+        run: |
+          go mod tidy
+
+          RESULT=$(git status)
+          if [[ $RESULT == *"Changes not staged for commit:"* || $RESULT == *"Untracked files:"* ]]; then
+            echo "🛑 You need to run 'go mod tidy' and commit the changes."
+            git diff
+            exit 1
+          else
+            echo "✅ You are good to go."
+          fi
+      
       - name: Run Tests
         run: task test
 
